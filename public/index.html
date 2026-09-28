@@ -1,0 +1,390 @@
+
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>อาหาร</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="logo">อาหาร</div>
+
+    <ul class="menu">
+      <li><a href="#hero">หน้าหลัก</a></li>
+      <li><a href="#products">สินค้า</a></li>
+      <li><a href="#contact">ติดต่อ</a></li>
+    </ul>
+  </nav>
+
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+
+    <img src="assets/99.png" alt="อาหาร" class="hero-img">
+
+    <div class="hero-text">
+      <h1>อาหาร<br>ไทย</h1>
+      <p>เมนูอาหารไทย</p>
+      <a href="#products" class="btn">ดูอาหาร</a>
+    </div>
+
+  </section>
+
+
+  <!-- ADD PRODUCT FORM -->
+  <section class="add-form-section">
+
+    <h2 class="section-title">➕ เพิ่มผลิตภัณฑ์ใหม่</h2>
+
+    <form id="add-product-form" class="add-form" enctype="multipart/form-data">
+
+      <div class="form-group">
+
+        <label for="product-name">
+          ชื่อผลิตภัณฑ์ *
+        </label>
+
+        <input type="text" id="product-name" name="name" required placeholder="เช่น น้ำพริกเผา">
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label for="product-producer">
+          ผู้ผลิต/กลุ่ม *
+        </label>
+
+        <input type="text" id="product-producer" name="producer" required placeholder="เช่น กลุ่มแม่บ้านบ้านโคก">
+
+      </div>
+
+
+      <div class="form-row">
+
+        <div class="form-group">
+
+          <label for="product-price">
+            ราคา (บาท) *
+          </label>
+
+          <input type="number" id="product-price" name="price" required min="1" placeholder="60">
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label for="product-category">
+            หมวดหมู่ *
+          </label>
+
+          <select id="product-category" name="category" required>
+
+            <option value="">
+              -- เลือกหมวดหมู่ --
+            </option>
+
+            <option value="อาหาร/เครื่องดื่ม">
+              🍯 อาหาร/เครื่องดื่ม
+            </option>
+
+            <option value="ผ้า/เครื่องแต่งกาย">
+              👗 ผ้า/เครื่องแต่งกาย
+            </option>
+
+            <option value="เครื่องประดับ/หัตถกรรม">
+              💍 เครื่องประดับ/หัตถกรรม
+            </option>
+
+            <option value="สมุนไพร/สุขภาพ">
+              🌿 สมุนไพร/สุขภาพ
+            </option>
+
+            <option value="ของใช้/ของตกแต่ง">
+              🏺 ของใช้/ของตกแต่ง
+            </option>
+
+          </select>
+
+        </div>
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label for="product-contact">
+          เบอร์ติดต่อ (ถ้ามี)
+        </label>
+
+        <input type="tel" id="product-contact" name="contact" placeholder="081-234-5678">
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label for="product-image">
+          รูปภาพ (jpg, png, webp - ไม่เกิน 5MB)
+        </label>
+
+        <input type="file" id="product-image" name="image" accept="image/jpeg,image/png,image/webp" required>
+
+      </div>
+
+
+      <button type="submit" class="submit-btn">
+
+        ➕ เพิ่มผลิตภัณฑ์
+
+      </button>
+
+    </form>
+
+  </section>
+
+
+  <!-- PRODUCT CARDS -->
+  <section class="cards-section" id="products">
+
+    <h2 class="section-title">
+      สินค้าของเรา
+    </h2>
+
+    <!-- JavaScript จะเติมสินค้าใน Container นี้ -->
+    <div class="card-grid" id="products-container">
+    </div>
+
+  </section>
+
+
+  <!-- ========================= -->
+  <!-- EDIT PRODUCT MODAL -->
+  <!-- ========================= -->
+
+  <div id="edit-modal" class="modal-overlay hidden">
+
+    <div class="modal">
+
+      <!-- MODAL HEADER -->
+      <div class="modal-header">
+
+        <h2>
+          ✏️ แก้ไขผลิตภัณฑ์
+        </h2>
+
+        <button type="button" class="modal-close" id="modal-close">
+
+          ✕
+
+        </button>
+
+      </div>
+
+
+      <!-- EDIT FORM -->
+      <form id="edit-form" class="edit-form">
+
+        <!-- เก็บ ID ของสินค้า -->
+        <input type="hidden" id="edit-id">
+
+
+        <!-- PRODUCT NAME -->
+        <div class="form-group">
+
+          <label for="edit-name">
+            ชื่อผลิตภัณฑ์ *
+          </label>
+
+          <input type="text" id="edit-name" required>
+
+        </div>
+
+
+        <!-- PRODUCER -->
+        <div class="form-group">
+
+          <label for="edit-producer">
+            ผู้ผลิต/กลุ่ม *
+          </label>
+
+          <input type="text" id="edit-producer" required>
+
+        </div>
+
+
+        <!-- PRICE + CATEGORY -->
+        <div class="form-row">
+
+          <div class="form-group">
+
+            <label for="edit-price">
+              ราคา *
+            </label>
+
+            <input type="number" id="edit-price" required min="1">
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label for="edit-category">
+              หมวดหมู่ *
+            </label>
+
+            <select id="edit-category" required>
+
+              <option value="อาหาร/เครื่องดื่ม">
+                🍯 อาหาร/เครื่องดื่ม
+              </option>
+
+              <option value="ผ้า/เครื่องแต่งกาย">
+                👗 ผ้า/เครื่องแต่งกาย
+              </option>
+
+              <option value="เครื่องประดับ/หัตถกรรม">
+                💍 เครื่องประดับ/หัตถกรรม
+              </option>
+
+              <option value="สมุนไพร/สุขภาพ">
+                🌿 สมุนไพร/สุขภาพ
+              </option>
+
+              <option value="ของใช้/ของตกแต่ง">
+                🏺 ของใช้/ของตกแต่ง
+              </option>
+
+            </select>
+
+          </div>
+
+        </div>
+
+
+        <!-- CONTACT -->
+        <div class="form-group">
+
+          <label for="edit-contact">
+            เบอร์ติดต่อ
+          </label>
+
+          <input type="tel" id="edit-contact">
+
+        </div>
+
+
+        <!-- MODAL FOOTER -->
+        <div class="modal-footer">
+
+          <button type="button" class="cancel-btn" id="cancel-btn">
+
+            ยกเลิก
+
+          </button>
+
+
+          <button type="submit" class="submit-btn">
+
+            💾 บันทึก
+
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+
+  <!-- FOOTER -->
+  <footer class="footer" id="contact">
+
+    <div class="footer-inner">
+
+
+      <div class="footer-col">
+
+        <h4>ติดต่อเรา</h4>
+
+        <p>
+          โทร 039-XXX-XXX
+        </p>
+
+        <p>
+          อีเมล hello@chanfresh.co.th
+        </p>
+
+        <p>
+          ที่อยู่ ต.แสลง อ.เมือง จ.จันทบุรี
+        </p>
+
+      </div>
+
+
+      <div class="footer-col">
+
+        <h4>โซเชียลมีเดีย</h4>
+
+        <p>
+          <a href="#">
+            Facebook: อาหารไทย
+          </a>
+        </p>
+
+        <p>
+          <a href="#">
+            Instagram: @chanfresh
+          </a>
+        </p>
+
+        <p>
+          <a href="#">
+            LINE: @chanfresh
+          </a>
+        </p>
+
+      </div>
+
+
+      <div class="footer-col">
+
+        <h4>เกี่ยวกับเรา</h4>
+
+        <p>
+          อยู่บ้านยาวๆ เช่นนี้ นอกจากต้อง WFH วนไปทุกวันแล้ว
+          อย่าลืมดูแลตัวเองด้วยการเข้าครัวทำอาหารกินกันด้วยนะคะสาวๆ
+          อาหารที่ทำเอง นอกจากจะสะอาดปลอดภัยแล้ว
+          ยังได้รสชาติถูกปากอีกด้วย ชอบกินรสไหนก็ทำกินเองตามสะดวก
+          วันนี้ Sanook Women รวม 30 เมนู "อาหารไทย"
+          พร้อมวิธีทำแบบง่ายๆ มาให้สาวๆ ได้เซฟเก็บไว้ทำกินเองแบบไม่รู้เบื่อแล้วค่ะ
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <p class="copyright">
+      © 2569 อาหารไทย
+    </p>
+
+  </footer>
+
+
+  <!-- JAVASCRIPT -->
+  <script src="script.js"></script>
+
+</body>
+
+</html>
+```
